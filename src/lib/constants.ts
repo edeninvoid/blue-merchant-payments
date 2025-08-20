@@ -10,6 +10,6 @@ export const QUERY_KEYS = {
     'MERCHANT_LIST',
     params,
   ],
-  MERCHANT_INFO: (id: number) => ['MERCHANT_INFO', id],
-  MERCHANT_PRODUCT_LIST: (id: number) => ['MERCHANT_PRODUCT_LIST', id],
+  MERCHANT_INFO: (id: string) => ['MERCHANT_INFO', id],
+  MERCHANT_PRODUCT_LIST: (id: string) => ['MERCHANT_PRODUCT_LIST', id],
 };

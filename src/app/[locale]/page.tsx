@@ -7,5 +7,5 @@ export default async function LocalePage({
 }) {
   const { locale } = await params;
 
-  return <MerchantListPage />;
+  return <MerchantListPage locale={locale} />;
 }

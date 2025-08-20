@@ -1,8 +1,9 @@
 import { create } from 'zustand';
+import { AuthTokenData } from '@/types/auth';
 
 interface AuthState {
-  token: string | null;
-  setToken: (token: string) => void;
+  token: AuthTokenData | null;
+  setToken: (token: AuthTokenData) => void;
   clearToken: () => void;
 }
 

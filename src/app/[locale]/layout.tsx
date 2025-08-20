@@ -1,4 +1,4 @@
-import ClientLayout from '@/app/client-layout';
+import ClientLayout from '@/app/[locale]/client-layout';
 import { MSWInitializer } from '@/lib/providers/MSWInitializer';
 
 export default async function LocaleLayout({

@@ -1,8 +1,9 @@
 import { useAuthStore } from '@/store/auth';
 import { useEffect, useState } from 'react';
 import { postAuthTokenApi } from '@/services/auth';
+import { usePathname } from 'next/navigation';
 
-export const useGenerateToken = (deviceId: string) => {
+const useGenerateToken = (deviceId: string) => {
   const { token, setToken } = useAuthStore();
   const [ready, setReady] = useState(false);
 
@@ -12,11 +13,13 @@ export const useGenerateToken = (deviceId: string) => {
         try {
           const data = await postAuthTokenApi({ deviceId });
           console.log(data);
-          setToken(data.token);
+          setToken({
+            token: data.token,
+            expireDate: new Date(Date.now() + data.expiresIn * 1000),
+          });
           setTimeout(() => {
             setReady(true);
           }, 500);
-          //TODO: expiresIn에 따른 토큰 삭제 로직 추가
         } catch (error) {
           console.error(error);
         }
@@ -30,3 +33,18 @@ export const useGenerateToken = (deviceId: string) => {
 
   return { isLoading: !ready };
 };
+
+const useAuthExpiration = () => {
+  const pathname = usePathname();
+  const { token, clearToken } = useAuthStore();
+
+  useEffect(() => {
+    if (!token?.expireDate) return;
+
+    if (new Date() > new Date(token.expireDate)) {
+      clearToken();
+    }
+  }, [clearToken, pathname, token]);
+};
+
+export { useGenerateToken, useAuthExpiration };
