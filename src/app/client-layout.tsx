@@ -2,13 +2,22 @@
 
 import { useGenerateToken } from '@/lib/hooks/useGenerateToken';
 import Providers from '@/lib/providers';
+import Header from '@/components/_layouts/Header';
+import Loading from '@/components/_ui/loading';
 
 export default function ClientLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  useGenerateToken('device-id');
+  const { isLoading } = useGenerateToken('device-id');
 
-  return <Providers>{children}</Providers>;
+  if (isLoading) return <Loading />;
+
+  return (
+    <Providers>
+      <Header />
+      <main className="m-2">{children}</main>
+    </Providers>
+  );
 }

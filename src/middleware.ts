@@ -1,17 +1,19 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { SUPPORTED_LANGUAGES } from '@/lib/constants';
 
-const SUPPORTED_LOCALES = ['en', 'ko'];
+const SUPPORTED_LOCALES = Object.keys(SUPPORTED_LANGUAGES);
 const DEFAULT_LOCALE = 'en';
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
+  console.log('middle', pathname);
   // 이미 locale prefix가 붙어있으면 패스
   const hasLocale = SUPPORTED_LOCALES.some(locale =>
     pathname.startsWith(`/${locale}`),
   );
-  if (hasLocale) return;
+  if (hasLocale) return NextResponse.next();
 
   // 브라우저 언어 추출
   const acceptLang = req.headers.get('accept-language');

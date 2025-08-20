@@ -1,10 +1,16 @@
 import { api } from '@/lib/axios';
+import {
+  MerchantListRequestParams,
+  MerchantListItemInfo,
+} from '@/types/merchant';
 
-const getMerchantList = async (): Promise<{ id: number; name: string }> => {
+const getMerchantList = async (
+  params?: MerchantListRequestParams,
+): Promise<MerchantListItemInfo[]> => {
   return await api.get('/merchants', {
     params: {
-      // query: '',
-      // sort: '',
+      query: params?.query ?? '',
+      sort: params?.sort ?? 'rating',
     },
   });
 };

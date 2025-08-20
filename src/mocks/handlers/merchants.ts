@@ -1,4 +1,14 @@
 import { http, HttpResponse } from 'msw';
+import {
+  MERCHANT_INFO,
+  MERCHANT_LIST,
+  MERCHANT_PRODUCT_LIST,
+} from '@/mocks/data/merchants';
+import {
+  MerchantInfo,
+  MerchantListItemInfo,
+  MerchantProductItemInfo,
+} from '@/types/merchant';
 
 export const merchantsHandlers = [
   http.get('/api/merchants', async ({ request }) => {
@@ -7,55 +17,39 @@ export const merchantsHandlers = [
     const query = url.searchParams.get('query') ?? '';
     const sort = url.searchParams.get('sort') ?? 'name';
 
-    let merchantList = [
-      {
-        id: 1,
-        name: 'Coffee House',
-        category: 'Cafe',
-        distanceKm: 4.45,
-        rating: 4.0,
-        logoUrl: '',
-      },
-      {
-        id: 2,
-        name: 'Tech Store',
-        category: 'Electronics',
-        distanceKm: 1100,
-        rating: 4.0,
-        logoUrl: '',
-      },
-      {
-        id: 3,
-        name: 'Supermarket',
-        category: 'Groceries',
-        distanceKm: 2300,
-        rating: 4.0,
-        logoUrl: '',
-      },
-      {
-        id: 4,
-        name: 'Tasty Restaurant',
-        category: 'Restaurant',
-        distanceKm: 600,
-        rating: 4.0,
-        logoUrl: '',
-      },
-      {
-        id: 5,
-        name: 'Book Shop',
-        category: 'Books',
-        distanceKm: 1900,
-        rating: 4.0,
-        logoUrl: '',
-      },
-    ];
+    const result: MerchantListItemInfo[] = MERCHANT_LIST.filter(merchant =>
+      query ? merchant.name.toLowerCase().includes(query.toLowerCase()) : true,
+    );
 
-    if (query) {
-      merchantList = merchantList.filter(merchant =>
-        merchant.name.toLowerCase().includes(query.toLowerCase()),
-      );
+    switch (sort) {
+      case 'name':
+        result.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 'category':
+        result.sort((a, b) => a.category.localeCompare(b.category));
+        break;
+      case 'distanceKm':
+        result.sort((a, b) => a.distanceKm - b.distanceKm);
+        break;
+      case 'rating':
+        result.sort((a, b) => b.rating - a.rating);
+        break;
+      default:
+        break;
     }
 
-    return HttpResponse.json(merchantList);
+    return HttpResponse.json(result);
+  }),
+
+  http.get('/api/merchants/:id', async () => {
+    const result: MerchantInfo = MERCHANT_INFO;
+
+    return HttpResponse.json(result);
+  }),
+
+  http.get('/api/merchants/:id/items', async () => {
+    const result: MerchantProductItemInfo[] = MERCHANT_PRODUCT_LIST;
+
+    return HttpResponse.json(result);
   }),
 ];

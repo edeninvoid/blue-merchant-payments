@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import MerchantListPage from '@/components/merchants/MerchantListPage';
 
 export default async function LocalePage({
   params,
@@ -7,9 +7,5 @@ export default async function LocalePage({
 }) {
   const { locale } = await params;
 
-  return (
-    <>
-      {locale} <Link href="/ko/merchant/list">merchantlistt</Link>
-    </>
-  );
+  return <MerchantListPage />;
 }

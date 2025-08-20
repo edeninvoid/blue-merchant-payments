@@ -9,7 +9,7 @@ function generateBase64Token(bytes = 24) {
 export const authHandlers = [
   http.post('/api/auth/token', async ({ request }) => {
     const body = await request.json();
-    console.log(body);
+    // console.log(body);
 
     return HttpResponse.json({
       token: generateBase64Token(),

@@ -5,21 +5,42 @@ export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   timeout: 5000,
   headers: {
+    'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
   },
 });
 
 api.interceptors.request.use(config => {
-  const token = useAuthStore.getState().token;
-  console.log(token);
-  if (token) {
-    config.headers = {
-      ...config.headers,
-      Authorization: `Bearer ${token}`,
-    } as AxiosRequestHeaders;
+  if (config.url?.includes('/auth/token')) {
+    return config;
   }
+
+  const token = useAuthStore.getState().token;
+
+  if (!token) {
+    return Promise.reject({
+      response: {
+        status: 401,
+        data: { message: 'Unauthorized.' },
+      },
+    });
+  }
+
+  config.headers = {
+    ...config.headers,
+    Authorization: `Bearer ${token}`,
+  } as AxiosRequestHeaders;
 
   return config;
 });
 
-api.interceptors.response.use(response => response.data);
+api.interceptors.response.use(
+  response => response.data,
+  error => {
+    if (error.response?.status === 401) {
+      console.error('Unauthorized.');
+      return [];
+    }
+    return Promise.reject(error);
+  },
+);
