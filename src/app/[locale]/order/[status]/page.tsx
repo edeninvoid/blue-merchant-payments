@@ -1,8 +1,20 @@
-'use client';
+import OrderPage from '@/components/order/OrderPage';
 
-import { useSetHeaderTitle } from '@/lib/hooks/useHeader';
+export default async function OrderStatusPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string; status: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const { locale, status } = await params;
+  const searchParameters = await searchParams;
 
-export default function OrderPage() {
-  useSetHeaderTitle('Order');
-  return <>OrderPage</>;
+  return (
+    <OrderPage
+      locale={locale}
+      status={status}
+      searchParams={searchParameters}
+    />
+  );
 }

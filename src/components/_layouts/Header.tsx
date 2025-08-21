@@ -15,7 +15,12 @@ export default function Header() {
   } = useHeader();
 
   return (
-    <header className="sticky top-0 flex h-12 items-center gap-4 bg-neutral-300/90 p-4">
+    <header
+      className={clsx(
+        'sticky top-0 flex h-12 items-center gap-4 bg-neutral-300/90 p-4',
+        isOrderPath && 'hidden',
+      )}
+    >
       <button
         type="button"
         title="Go back"
