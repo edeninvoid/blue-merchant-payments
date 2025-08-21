@@ -15,9 +15,9 @@ api.interceptors.request.use(config => {
     return config;
   }
 
-  const token = useAuthStore.getState().token;
+  const auth = useAuthStore.getState().token;
 
-  if (!token) {
+  if (!auth) {
     return Promise.reject({
       response: {
         status: 401,
@@ -28,7 +28,7 @@ api.interceptors.request.use(config => {
 
   config.headers = {
     ...config.headers,
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${auth.token}`,
   } as AxiosRequestHeaders;
 
   return config;
