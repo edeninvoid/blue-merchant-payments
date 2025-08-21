@@ -1,13 +1,14 @@
 import { MerchantProductItem } from '@/types/merchant';
 import { memo } from 'react';
 import { formattedPrice } from '@/lib/utils';
+import { useMerchantsProductsStore } from '@/store/merchants';
 
 interface Props {
   item: MerchantProductItem;
-  onCheckChange: (id: number, checked: boolean) => void;
 }
 
-function MerchantInfoProductListItemComponent({ item, onCheckChange }: Props) {
+function MerchantInfoProductListItemComponent({ item }: Props) {
+  const onCheckChange = useMerchantsProductsStore(state => state.toggleProduct);
   return (
     <li>
       <label

@@ -6,6 +6,8 @@ import { CURRENCY } from '@/lib/constants';
 import { useLocaleContext } from '@/lib/contexts/LocaleContext';
 import { useRouter } from 'next/navigation';
 import { PostOrderRequestParams } from '@/types/orders';
+import { useMerchantsProductsStore } from '@/store/merchants';
+import Loading from '@/components/_ui/loading';
 
 interface Props {
   merchantId: string;
@@ -14,8 +16,15 @@ interface Props {
 export default function MerchantInfoProducts({ merchantId }: Props) {
   const { push } = useRouter();
   const locale = useLocaleContext();
-  const { productList, handleCheckChange, totalPrice } =
-    useMerchantsProducts(merchantId);
+  const { isLoading } = useMerchantsProducts(merchantId);
+
+  const productList = useMerchantsProductsStore(state => state.productList);
+  const totalPrice = useMerchantsProductsStore(state =>
+    state.productList
+      .filter(item => item.isChecked)
+      .reduce((sum, item) => sum + item.price, 0),
+  );
+
   const { mutateAsync: postOrders } = usePostOrders();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -35,6 +44,8 @@ export default function MerchantInfoProducts({ merchantId }: Props) {
     }
   };
 
+  if (isLoading) return <Loading />;
+
   return (
     <form
       onSubmit={onSubmit}
@@ -46,16 +57,12 @@ export default function MerchantInfoProducts({ merchantId }: Props) {
       </h3>
       <ul className="grid grid-cols-1 rounded bg-white">
         {productList?.map(product => (
-          <MerchantInfoProductListItem
-            key={product.id}
-            item={product}
-            onCheckChange={handleCheckChange}
-          />
+          <MerchantInfoProductListItem key={product.id} item={product} />
         ))}
       </ul>
       <button
         type="submit"
-        aria-label={`Pay $${totalPrice} for selected products`}
+        aria-label={`Pay $${formattedPrice(totalPrice)} for selected products`}
         className="mt-2 h-10 w-full rounded bg-neutral-600 font-semibold text-white hover:cursor-pointer hover:bg-neutral-400 disabled:cursor-not-allowed disabled:bg-gray-200"
         disabled={!totalPrice || totalPrice === 0}
       >

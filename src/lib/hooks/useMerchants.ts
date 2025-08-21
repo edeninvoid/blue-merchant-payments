@@ -5,14 +5,10 @@ import {
   getMerchantProductList,
 } from '@/services/merchants';
 import { QUERY_KEYS } from '@/lib/constants';
-import {
-  MerchantListRequestParams,
-  MerchantProductItem,
-} from '@/types/merchant';
+import { MerchantListRequestParams } from '@/types/merchant';
 import { delay } from '@/lib/utils';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useLocaleContext } from '@/lib/contexts/LocaleContext';
-import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { useMerchantsProductsStore } from '@/store/merchants';
 
 const useMerchantListQuery = (params?: MerchantListRequestParams) => {
   return useSuspenseQuery({
@@ -41,25 +37,10 @@ const useMerchantProductListQuery = (id: string) => {
   });
 };
 
-const useMerchantsProducts = (id: string) => {
-  const { data: productListData } = useMerchantProductListQuery(id);
-  const [productList, setProductList] = useState<MerchantProductItem[]>([]);
-
-  const handleCheckChange = (id: number, checked: boolean) => {
-    setProductList(prev =>
-      prev.map(item =>
-        item.id === id ? { ...item, isChecked: checked } : item,
-      ),
-    );
-  };
-
-  const totalPrice = useMemo(
-    () =>
-      productList
-        .filter(item => item.isChecked)
-        .reduce((sum, item) => sum + item.price, 0),
-    [productList],
-  );
+const useMerchantsProducts = (merchantId: string) => {
+  const { data: productListData, isLoading } =
+    useMerchantProductListQuery(merchantId);
+  const setProductList = useMerchantsProductsStore(state => state.setProducts);
 
   useEffect(() => {
     if (!productListData) return;
@@ -70,9 +51,9 @@ const useMerchantsProducts = (id: string) => {
         isChecked: true,
       })),
     );
-  }, [productListData]);
+  }, [productListData, setProductList]);
 
-  return { productList, handleCheckChange, totalPrice };
+  return { isLoading };
 };
 
 export {
