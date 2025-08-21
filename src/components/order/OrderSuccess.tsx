@@ -5,12 +5,19 @@ import Link from 'next/link';
 import { useLocaleContext } from '@/lib/contexts/LocaleContext';
 
 interface Props {
-  orderId: string;
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export default function OrderSuccess({ orderId }: Props) {
+export default function OrderSuccess({ searchParams }: Props) {
   const locale = useLocaleContext();
-  // orderId를 통해 추가적인 주문 상세 정보를 표시할 수 있습니다.
+  const orderId = searchParams.orderId as string;
+
+  // orderId를 통해 추가적인 주문 상세 정보를 표시할 수 있습니다. ex) getOrdersDetailApi
+  if (!orderId) {
+    console.error('Wrong Access.');
+    return null;
+  }
+
   return (
     <section
       role="status"
@@ -29,7 +36,7 @@ export default function OrderSuccess({ orderId }: Props) {
         Payment Successful!
       </h2>
       <Link href={`/${locale}`} className="hover:underline">
-        Continue Shopping..
+        Continue Shopping :)
       </Link>
     </section>
   );

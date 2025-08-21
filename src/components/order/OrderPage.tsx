@@ -5,6 +5,7 @@ import { LocaleContext } from '@/lib/contexts/LocaleContext';
 import { SUPPORTED_LANGUAGES } from '@/lib/constants';
 import OrderSuccess from '@/components/order/OrderSuccess';
 import OrderFail from '@/components/order/OrderFail';
+import { ComponentType } from 'react';
 
 interface Props {
   locale: string;
@@ -12,13 +13,21 @@ interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
+const COMPONENT_BY_STATUS: Record<
+  string,
+  ComponentType<{ searchParams: Props['searchParams'] }>
+> = {
+  pending: OrderPending,
+  declined: OrderFail,
+  paid: OrderSuccess,
+};
+
 export default function OrderPage({ locale, status, searchParams }: Props) {
-  const orderId = searchParams.orderId as string;
+  const Component = COMPONENT_BY_STATUS[status];
+
   return (
     <LocaleContext value={locale as keyof typeof SUPPORTED_LANGUAGES}>
-      {status === 'declined' && <OrderFail searchParams={searchParams} />}
-      {status === 'pending' && <OrderPending searchParams={searchParams} />}
-      {status === 'paid' && <OrderSuccess orderId={orderId} />}
+      <Component searchParams={searchParams} />
     </LocaleContext>
   );
 }
