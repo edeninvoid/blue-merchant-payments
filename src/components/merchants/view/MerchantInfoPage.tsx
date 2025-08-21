@@ -3,9 +3,14 @@
 import { LocaleContext } from '@/lib/contexts/LocaleContext';
 import { SUPPORTED_LANGUAGES } from '@/lib/constants';
 import Loading from '@/components/_ui/loading';
-import { Suspense } from 'react';
-import MerchantInfo from '@/components/merchants/view/MerchantInfo';
-import MerchantInfoProducts from '@/components/merchants/view/MerchantInfoProducts';
+import { lazy, Suspense } from 'react';
+
+const MerchantInfo = lazy(
+  () => import('@/components/merchants/view/MerchantInfo'),
+);
+const MerchantInfoProducts = lazy(
+  () => import('@/components/merchants/view/MerchantInfoProducts'),
+);
 
 interface Props {
   locale: string;
