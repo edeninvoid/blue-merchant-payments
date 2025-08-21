@@ -16,7 +16,10 @@ export default function MerchantInfo({ id }: Props) {
   if (status === 'error') return <MerchantInfoError />;
 
   return (
-    <section aria-labelledby={info.name} className="flex flex-col gap-3 p-2">
+    <section
+      aria-labelledby={`merchant-${id}`}
+      className="flex flex-col gap-3 p-2"
+    >
       <h2 id={`merchant-${id}`} className="sr-only">
         {info.name}
       </h2>
@@ -28,20 +31,16 @@ export default function MerchantInfo({ id }: Props) {
         </div>
       </div>
       <dl className="flex flex-col gap-1">
-        <div>
-          <dt className="sr-only">Address</dt>
-          <dd className="flex items-center gap-1 text-sm">
-            <MapIcon />
-            {info.address}
-          </dd>
-        </div>
-        <div>
-          <dt className="sr-only">Phone</dt>
-          <dd className="flex items-center gap-1 text-sm">
-            <PhoneIcon />
-            {info.phone}
-          </dd>
-        </div>
+        <dt className="sr-only">Address</dt>
+        <dd className="flex items-center gap-1 text-sm">
+          <MapIcon />
+          {info.address}
+        </dd>
+        <dt className="sr-only">Phone</dt>
+        <dd className="flex items-center gap-1 text-sm">
+          <PhoneIcon />
+          {info.phone}
+        </dd>
       </dl>
     </section>
   );

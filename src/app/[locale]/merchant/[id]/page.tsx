@@ -7,6 +7,5 @@ export default async function MerchantViewPage({
 }) {
   const { id, locale } = await params;
 
-  console.log(locale);
-  return <MerchantInfoPage id={id} />;
+  return <MerchantInfoPage locale={locale} id={id} />;
 }
