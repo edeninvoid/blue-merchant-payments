@@ -6,7 +6,7 @@ import { Skeleton } from '@/components/_ui/skeleton';
 import Link from 'next/link';
 import { useLocaleContext } from '@/lib/contexts/LocaleContext';
 
-function MerchantItemArticle({ item }: { item: MerchantListItemInfo }) {
+function MerchantListItemComponent({ item }: { item: MerchantListItemInfo }) {
   const locale = useLocaleContext();
   return (
     <li>
@@ -43,7 +43,7 @@ function MerchantItemArticle({ item }: { item: MerchantListItemInfo }) {
   );
 }
 
-const MerchantListItem = memo(MerchantItemArticle);
+const MerchantListItem = memo(MerchantListItemComponent);
 
 function MerchantListSkeletonItem() {
   return (

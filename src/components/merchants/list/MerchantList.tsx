@@ -1,11 +1,11 @@
 import { useMerchantListQuery } from '@/lib/hooks/useMerchants';
-import MerchantListContainer from '@/components/merchants/MerchantListContainer';
+import MerchantListContainer from '@/components/merchants/list/MerchantListContainer';
 import {
   MerchantListItem,
   MerchantListSkeletonItem,
-} from '@/components/merchants/MerchantListItem';
+} from '@/components/merchants/list/MerchantListItem';
 import { MerchantListRequestParams } from '@/types/merchant';
-import MerchantListNoItem from '@/components/merchants/MerchantListNoItem';
+import MerchantListNoItem from '@/components/merchants/list/MerchantListNoItem';
 
 function MerchantList({
   params,

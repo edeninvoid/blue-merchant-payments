@@ -1,8 +1,8 @@
-export interface AuthTokenRequestParams {
+export interface PostAuthTokenRequestParams {
   deviceId: string;
 }
 
-export interface AuthTokenResponse {
+export interface PostAuthTokenResponse {
   token: string;
   expiresIn: number;
 }

@@ -5,6 +5,11 @@ export const SUPPORTED_LANGUAGES = {
   en: 'English',
 };
 
+export const CURRENCY = {
+  ko: '원',
+  en: 'USD',
+};
+
 export const QUERY_KEYS = {
   MERCHANT_LIST: (params?: MerchantListRequestParams) => [
     'MERCHANT_LIST',
@@ -12,4 +17,5 @@ export const QUERY_KEYS = {
   ],
   MERCHANT_INFO: (id: string) => ['MERCHANT_INFO', id],
   MERCHANT_PRODUCT_LIST: (id: string) => ['MERCHANT_PRODUCT_LIST', id],
+  ORDER_STATUS: (orderId: string) => ['ORDER_STATUS', orderId],
 };

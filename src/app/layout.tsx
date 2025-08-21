@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'BluePayments',
-  description: '',
+  title: 'Blue Payments',
+  description: 'Greeting, Blue Payments.',
 };
 
 export default function RootLayout({

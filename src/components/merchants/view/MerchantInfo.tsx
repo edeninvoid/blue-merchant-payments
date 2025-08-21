@@ -1,26 +1,27 @@
 import { useMerchantInfoQuery } from '@/lib/hooks/useMerchants';
 import { useSetHeaderTitle } from '@/lib/hooks/useHeader';
-import MerchantInfoError from '@/components/merchants/MerchantInfoError';
+import MerchantInfoError from '@/components/merchants/view/MerchantInfoError';
 import Image from 'next/image';
 import MapIcon from '@/components/_icons/Map';
 import PhoneIcon from '@/components/_icons/Phone';
 
 interface Props {
-  id: string;
+  merchantId: string;
 }
 
-export default function MerchantInfo({ id }: Props) {
-  const { data: info, status } = useMerchantInfoQuery(id);
+export default function MerchantInfo({ merchantId }: Props) {
+  const { data: info, status } = useMerchantInfoQuery(merchantId);
   useSetHeaderTitle(info.name);
 
+  // 응답에 따른 에러 처리 분기
   if (status === 'error') return <MerchantInfoError />;
 
   return (
     <section
-      aria-labelledby={`merchant-${id}`}
+      aria-labelledby={`merchant-${merchantId}`}
       className="flex flex-col gap-3 p-2"
     >
-      <h2 id={`merchant-${id}`} className="sr-only">
+      <h2 id={`merchant-${merchantId}`} className="sr-only">
         {info.name}
       </h2>
       <div className="flex gap-4">

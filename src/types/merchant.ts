@@ -20,10 +20,14 @@ export type MerchantInfo = {
   phone: string;
 };
 
-export type MerchantProductItemInfo = {
+export interface MerchantProductItemInfo {
   id: number;
   name: string;
   price: number;
   currency: string;
   imageUrl: string;
-};
+}
+
+export interface MerchantProductItem extends MerchantProductItemInfo {
+  isChecked: boolean;
+}

@@ -5,8 +5,8 @@ import { Suspense, useState } from 'react';
 import {
   MerchantList,
   MerchantSkeletonList,
-} from '@/components/merchants/MerchantList';
-import MerchantListSearchBar from '@/components/merchants/MerchantListSearchBar';
+} from '@/components/merchants/list/MerchantList';
+import MerchantListSearchBar from '@/components/merchants/list/MerchantListSearchBar';
 import { MerchantListRequestParams } from '@/types/merchant';
 import { LocaleContext } from '@/lib/contexts/LocaleContext';
 import { SUPPORTED_LANGUAGES } from '@/lib/constants';

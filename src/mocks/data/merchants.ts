@@ -52,7 +52,7 @@ export const MERCHANT_INFO = {
 export const MERCHANT_PRODUCT_LIST = [
   {
     id: 100001,
-    name: 'LATTE',
+    name: 'Latte',
     price: 4.3,
     currency: 'USD',
     imageUrl: '/icons/coffee.svg',

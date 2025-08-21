@@ -1,4 +1,4 @@
-import MerchantListPage from '@/components/merchants/MerchantListPage';
+import MerchantListPage from '@/components/merchants/list/MerchantListPage';
 import { Metadata, ResolvingMetadata } from 'next';
 
 export default async function LocalePage({

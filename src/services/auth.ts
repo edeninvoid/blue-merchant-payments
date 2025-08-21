@@ -1,9 +1,12 @@
 import { api } from '@/lib/axios';
-import { AuthTokenRequestParams, AuthTokenResponse } from '@/types/auth';
+import {
+  PostAuthTokenRequestParams,
+  PostAuthTokenResponse,
+} from '@/types/auth';
 
 const postAuthTokenApi = async (
-  params: AuthTokenRequestParams,
-): Promise<AuthTokenResponse> => {
+  params: PostAuthTokenRequestParams,
+): Promise<PostAuthTokenResponse> => {
   return await api.post('/auth/token', {
     deviceId: params.deviceId,
   });
