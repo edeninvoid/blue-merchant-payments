@@ -18,6 +18,7 @@ export default function Header() {
     <header className="sticky top-0 flex h-12 items-center gap-4 bg-neutral-300/90 p-4">
       <button
         type="button"
+        title="Go back"
         aria-label="Go back"
         className={clsx('', isLocaleRoot && 'hidden')}
         onClick={back}
@@ -25,7 +26,10 @@ export default function Header() {
         <ArrowLeft />
       </button>
       <h1 className="text-lg">{title}</h1>
-      <div className={clsx('ml-auto', isOrderPath && 'hidden')}>
+      <nav
+        aria-label="Language selector"
+        className={clsx('ml-auto', isOrderPath && 'hidden')}
+      >
         <label htmlFor="locale-select" className="sr-only">
           Select Language
         </label>
@@ -41,7 +45,7 @@ export default function Header() {
             </option>
           ))}
         </select>
-      </div>
+      </nav>
     </header>
   );
 }

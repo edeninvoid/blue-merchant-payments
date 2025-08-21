@@ -38,6 +38,8 @@ const useSetHeaderTitle = (title: string) => {
 
   useEffect(() => {
     setHeaderTitle(title);
+
+    return () => setHeaderTitle('');
   }, [setHeaderTitle, title]);
 };
 
