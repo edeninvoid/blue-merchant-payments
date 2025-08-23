@@ -30,7 +30,7 @@ export default function OrderPending({ searchParams }: Props) {
 
   useEffect(() => {
     if (postOrderResponse) {
-      // 정상 응답 시, 분기 처리 필요하지만 여기서는 성공으로 처리하도록 하겠습니다.
+      // 실제 API의 응답에 의한 분기 처리 필요하지만, 여기서는 성공으로 처리하도록 하겠습니다.
       // if (postOrderResponse.status === '...') {
       // }
       setTimeout(() => {
@@ -42,6 +42,7 @@ export default function OrderPending({ searchParams }: Props) {
         );
       }, 1000);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postOrderResponse]);
 
   return (

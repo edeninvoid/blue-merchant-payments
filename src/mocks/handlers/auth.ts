@@ -7,9 +7,9 @@ function generateBase64Token(bytes = 24) {
 }
 
 export const authHandlers = [
-  http.post('/api/auth/token', async ({ request }) => {
-    const body = await request.json();
-    // console.log(body);
+  http.post('/api/auth/token', async () => {
+    // { request } 에 따른 body 확인 및 분기 처리 데이터 but 필요한 데이터가 아니기에 주석처리
+    // const body = await request.json();
 
     return HttpResponse.json({
       token: generateBase64Token(),

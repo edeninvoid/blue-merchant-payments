@@ -21,10 +21,12 @@ export default function MerchantListSearchBar({
     }, 500);
 
     return () => clearTimeout(handler);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   useEffect(() => {
     onSearch({ query, sort });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sort]);
 
   return (
