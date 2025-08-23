@@ -4,15 +4,15 @@ import ArrowLeft from '@/components/_icons/ArrowLeft';
 import clsx from 'clsx';
 import { useHeader } from '@/lib/hooks/useHeader';
 import { SUPPORTED_LANGUAGES } from '@/lib/constants';
+import { useHeaderTitleStore } from '@/store/common';
 
 export default function Header() {
   const {
-    isLocaleRoot,
-    isOrderPath,
-    back,
-    title,
+    router: { back },
+    conditionalPath: { isRootPath, isOrderPath },
     selectProps: { currentLang, handleChange },
   } = useHeader();
+  const title = useHeaderTitleStore(state => state.title);
 
   return (
     <header
@@ -25,7 +25,7 @@ export default function Header() {
         type="button"
         title="Go back"
         aria-label="Go back"
-        className={clsx('', isLocaleRoot && 'hidden')}
+        className={clsx('', isRootPath && 'hidden')}
         onClick={back}
       >
         <ArrowLeft />

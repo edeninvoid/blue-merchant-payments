@@ -5,16 +5,14 @@ import { SUPPORTED_LANGUAGES } from '@/lib/constants';
 
 const useHeader = () => {
   const { back, push } = useRouter();
-
   const pathname = usePathname();
   const pathLang = pathname.split('/')[1];
-  const isLocaleRoot =
+
+  const isRootPath =
     pathLang in SUPPORTED_LANGUAGES && pathname === `/${pathLang}`;
   const isOrderPath = pathname.includes('/order');
-
-  const headerTitle = useHeaderTitleStore(state => state.title);
-
   const currentLang = pathLang in SUPPORTED_LANGUAGES ? pathLang : 'ko';
+
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedLang = e.target.value;
     const langKeys = Object.keys(SUPPORTED_LANGUAGES).join('|');
@@ -25,10 +23,8 @@ const useHeader = () => {
   };
 
   return {
-    isLocaleRoot,
-    isOrderPath,
-    back,
-    title: headerTitle,
+    router: { back },
+    conditionalPath: { isRootPath, isOrderPath },
     selectProps: { currentLang, handleChange },
   };
 };
