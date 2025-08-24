@@ -18,8 +18,9 @@ npm run test
 * Zustand 및 TanStack Query 를 사용하여 인증, 데이터, API 등의 데이터를 전역 상태 관리 및 캐싱 처리했습니다.
 * 일부 Suspense 관련 데이터에 코드 스플리팅을 도입했습니다.
 * 가능한 웹표준에 맞는 마크업을 작성하도록 했으며, 일부 반응형 컴포넌트로 구성했습니다.
-* 국제화(i18n) 관련 코드 추가 예정입니다.
-  * {ko/en} locale로 기본 세팅 되도록 middleware를 구성했습니다.  
+* 다국어를 지원하도록 했습니다. (next-intl)
+  * 기본 언어는 브라우져의 설정에 따릅니다.
+  * 지원 언어: 'en', 'ko'
 * jest 기반의 테스트 코드를 작성했습니다. (보완 예정입니다.)
 
 ### 시나리오 설정 방법
@@ -34,5 +35,5 @@ npm run test
   * 즉시 성공으로 이어지도록 구성했습니다.
 
 ### API 변경 사항
-* `/api/orders` 의 response 를 `{ orderId: string, status: 'PAID'|'DECLINED'|'PENDING' }`으로 수정했습니다.
+* `/api/orders`의 response를 `{ orderId: string, status: 'PAID'|'DECLINED'|'PENDING' }`으로 수정했습니다.
   * 응답 데이터 캐싱 처리를 위한 추가 키 데이터입니다. (queryKey)
