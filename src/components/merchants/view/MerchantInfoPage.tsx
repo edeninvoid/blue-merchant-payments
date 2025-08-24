@@ -11,11 +11,10 @@ const MerchantInfoProducts = lazy(
 );
 
 interface Props {
-  locale: string;
   merchantId: string;
 }
 
-export default function MerchantInfoPage({ locale, merchantId }: Props) {
+export default function MerchantInfoPage({ merchantId }: Props) {
   return (
     <Suspense fallback={<Loading />}>
       <MerchantInfo merchantId={merchantId} />

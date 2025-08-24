@@ -6,7 +6,6 @@ import OrderFail from '@/components/order/OrderFail';
 import { ComponentType } from 'react';
 
 interface Props {
-  locale: string;
   status: string;
   searchParams: { [key: string]: string | string[] | undefined };
 }
@@ -20,7 +19,7 @@ const COMPONENT_BY_STATUS: Record<
   paid: OrderSuccess,
 };
 
-export default function OrderPage({ locale, status, searchParams }: Props) {
+export default function OrderPage({ status, searchParams }: Props) {
   const Component = COMPONENT_BY_STATUS[status];
 
   return (

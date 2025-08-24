@@ -1,5 +1,5 @@
 import MerchantListPage from '@/components/merchants/list/MerchantListPage';
-import { Metadata, ResolvingMetadata } from 'next';
+import { setRequestLocale } from 'next-intl/server';
 
 export default async function LocalePage({
   params,
@@ -8,21 +8,7 @@ export default async function LocalePage({
 }) {
   const { locale } = await params;
 
-  return <MerchantListPage locale={locale} />;
-}
+  setRequestLocale(locale);
 
-export async function generateMetadata(
-  _: unknown,
-  parent: ResolvingMetadata,
-): Promise<Metadata> {
-  const previousImages = (await parent).openGraph?.images || [];
-
-  return {
-    title: 'Blue Payments | Merchants',
-    description: 'Blue Payments',
-    openGraph: {
-      title: 'Blue Payments | Merchants',
-      images: [...previousImages],
-    },
-  };
+  return <MerchantListPage />;
 }

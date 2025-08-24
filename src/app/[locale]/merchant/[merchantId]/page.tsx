@@ -1,4 +1,5 @@
 import MerchantInfoPage from '@/components/merchants/view/MerchantInfoPage';
+import { setRequestLocale } from 'next-intl/server';
 
 export default async function MerchantViewPage({
   params,
@@ -7,5 +8,7 @@ export default async function MerchantViewPage({
 }) {
   const { locale, merchantId } = await params;
 
-  return <MerchantInfoPage locale={locale} merchantId={merchantId} />;
+  setRequestLocale(locale);
+
+  return <MerchantInfoPage merchantId={merchantId} />;
 }

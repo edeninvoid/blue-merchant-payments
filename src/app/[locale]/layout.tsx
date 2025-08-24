@@ -1,7 +1,25 @@
 import ClientLayout from '@/app/[locale]/client-layout';
 import { MSWInitializer } from '@/lib/providers/MSWInitializer';
 import { NextIntlClientProvider } from 'next-intl';
-import { setRequestLocale } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { Metadata, ResolvingMetadata } from 'next';
+
+export async function generateMetadata(
+  _: unknown,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const t = await getTranslations('LocaleLayout');
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: t('title'),
+    description: t('description'),
+    openGraph: {
+      title: t('title'),
+      images: [...previousImages],
+    },
+  };
+}
 
 export default async function LocaleLayout({
   children,
@@ -16,7 +34,7 @@ export default async function LocaleLayout({
 
   return (
     <html className="h-full" lang={locale}>
-      <body className="vsc-initialize" cz-shortcut-listen="true">
+      <body className="vsc-initialize">
         <MSWInitializer>
           <NextIntlClientProvider>
             <ClientLayout>{children}</ClientLayout>

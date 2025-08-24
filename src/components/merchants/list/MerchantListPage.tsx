@@ -11,11 +11,7 @@ const MerchantList = lazy(
   () => import('@/components/merchants/list/MerchantList'),
 );
 
-interface Props {
-  locale: string;
-}
-
-export default function MerchantListPage({ locale }: Props) {
+export default function MerchantListPage() {
   const t = useTranslations('MerchantListPage');
   const [params, setParams] = useState<MerchantListRequestParams>();
   useSetHeaderTitle(t('title'));

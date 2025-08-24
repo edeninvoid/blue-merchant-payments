@@ -1,4 +1,8 @@
 {
+  "LocaleLayout": {
+    "title": "블루 페이먼츠 | 가맹점",
+    "description": "가맹점"
+  },
   "MerchantListPage": {
     "title": "가맹점"
   },
@@ -21,5 +25,9 @@
     "listTitle": "메뉴 목록",
     "payButtonAriaLabel": "선택한 메뉴에 대한 {amount}원을 결제합니다.",
     "payButtonLabel": "{amount}원 결제하기"
+  },
+  "OrderStatusPage": {
+    "title": "블루 페이먼츠 | 주문하기",
+    "description": "주문하기"
   }
 }

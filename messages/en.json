@@ -1,4 +1,8 @@
 {
+  "LocaleLayout": {
+    "title": "Blue Payments | Merchants",
+    "description": "Merchants"
+  },
   "MerchantListPage": {
     "title": "Merchants"
   },
@@ -21,5 +25,9 @@
     "listTitle": "Products",
     "payButtonAriaLabel": "Pay ${amount} for selected products",
     "payButtonLabel": "Pay $ {amount}"
+  },
+  "OrderStatusPage": {
+    "title": "Blue Payments | Orders",
+    "description": "Orders"
   }
 }
