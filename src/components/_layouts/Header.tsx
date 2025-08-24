@@ -3,54 +3,57 @@
 import ArrowLeft from '@/components/_icons/ArrowLeft';
 import clsx from 'clsx';
 import { useHeader } from '@/lib/hooks/useHeader';
-import { SUPPORTED_LANGUAGES } from '@/lib/constants';
 import { useHeaderTitleStore } from '@/store/common';
+import LocaleSwitcher from '@/components/_layouts/LocaleSwitcher';
 
 export default function Header() {
   const {
     router: { back },
     conditionalPath: { isRootPath, isOrderPath },
-    selectProps: { currentLang, handleChange },
+    // selectProps: { currentLang, handleChange },
   } = useHeader();
   const title = useHeaderTitleStore(state => state.title);
 
   return (
     <header
       className={clsx(
-        'sticky top-0 flex h-12 items-center gap-4 bg-neutral-300/90 p-4',
+        'sticky top-0 flex h-12 items-center justify-between gap-4 bg-neutral-300/90 p-4',
         isOrderPath && 'hidden',
       )}
     >
-      <button
-        type="button"
-        title="Go back"
-        aria-label="Go back"
-        className={clsx('', isRootPath && 'hidden')}
-        onClick={back}
-      >
-        <ArrowLeft />
-      </button>
-      <h1 className="text-lg">{title}</h1>
-      <nav
-        aria-label="Language selector"
-        className={clsx('ml-auto', isOrderPath && 'hidden')}
-      >
-        <label htmlFor="locale-select" className="sr-only">
-          Select Language
-        </label>
-        <select
-          id="locale-select"
-          value={currentLang}
-          onChange={handleChange}
-          className="rounded border border-gray-400 p-1 text-sm"
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          title="Go back"
+          aria-label="Go back"
+          className={clsx('', isRootPath && 'hidden')}
+          onClick={back}
         >
-          {Object.entries(SUPPORTED_LANGUAGES).map(([code, label]) => (
-            <option key={code} value={code}>
-              {label}
-            </option>
-          ))}
-        </select>
-      </nav>
+          <ArrowLeft />
+        </button>
+        <h1 className="text-lg">{title}</h1>
+      </div>
+      {/*<nav*/}
+      {/*  aria-label="Language selector"*/}
+      {/*  className={clsx('ml-auto', isOrderPath && 'hidden')}*/}
+      {/*>*/}
+      {/*  <label htmlFor="locale-select" className="sr-only">*/}
+      {/*    Select Language*/}
+      {/*  </label>*/}
+      {/*  <select*/}
+      {/*    id="locale-select"*/}
+      {/*    value={currentLang}*/}
+      {/*    onChange={handleChange}*/}
+      {/*    className="rounded border border-gray-400 p-1 text-sm"*/}
+      {/*  >*/}
+      {/*    {Object.entries(SUPPORTED_LANGUAGES).map(([code, label]) => (*/}
+      {/*      <option key={code} value={code}>*/}
+      {/*        {label}*/}
+      {/*      </option>*/}
+      {/*    ))}*/}
+      {/*  </select>*/}
+      {/*</nav>*/}
+      <LocaleSwitcher />
     </header>
   );
 }

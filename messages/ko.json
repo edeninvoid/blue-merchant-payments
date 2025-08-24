@@ -1,0 +1,25 @@
+{
+  "MerchantListPage": {
+    "title": "가맹점"
+  },
+  "LocaleSwitcher": {
+    "label": "언어 변경",
+    "locale": "{locale, select, ko {🇰🇷 한국어} en {🇺🇸 English} other {알 수 없음}}"
+  },
+  "MerchantListNoItem": {
+    "text": "가맹점이 존재하지 않습니다."
+  },
+  "MerchantListSearchBar": {
+    "searchLabel": "가맹점 검색",
+    "sortLabel": "가맹점을 정렬합니다.",
+    "name": "이름순",
+    "category": "분류순",
+    "distance": "거리순",
+    "rating": "평점순"
+  },
+  "MerchantInfoProducts": {
+    "listTitle": "메뉴 목록",
+    "payButtonAriaLabel": "선택한 메뉴에 대한 {amount}원을 결제합니다.",
+    "payButtonLabel": "{amount}원 결제하기"
+  }
+}

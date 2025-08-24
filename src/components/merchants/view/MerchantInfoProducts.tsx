@@ -3,11 +3,11 @@ import { MerchantInfoProductListItem } from '@/components/merchants/view/Merchan
 import { formattedPrice, getPushUrl } from '@/lib/utils';
 import { usePostOrders } from '@/lib/hooks/useOrders';
 import { CURRENCY } from '@/lib/constants';
-import { useLocaleContext } from '@/lib/contexts/LocaleContext';
 import { useRouter } from 'next/navigation';
 import { PostOrderRequestParams } from '@/types/orders';
 import { useMerchantsProductsStore } from '@/store/merchants';
 import Loading from '@/components/_ui/loading';
+import { useLocale, useTranslations } from 'next-intl';
 
 interface Props {
   merchantId: string;
@@ -15,8 +15,9 @@ interface Props {
 
 export default function MerchantInfoProducts({ merchantId }: Props) {
   const { push } = useRouter();
-  const locale = useLocaleContext();
+  const locale = useLocale();
   const { isLoading } = useMerchantsProducts(merchantId);
+  const t = useTranslations('MerchantInfoProducts');
 
   const productList = useMerchantsProductsStore(state => state.productList);
   const totalPrice = useMerchantsProductsStore(state =>
@@ -33,7 +34,7 @@ export default function MerchantInfoProducts({ merchantId }: Props) {
     const postOrderRequestParams: PostOrderRequestParams = {
       merchantId: merchantId,
       currency: CURRENCY[locale],
-      amount: totalPrice.toString(),
+      amount: formattedPrice(totalPrice, locale),
     };
 
     try {
@@ -53,7 +54,7 @@ export default function MerchantInfoProducts({ merchantId }: Props) {
       className="flex flex-col gap-2 p-2"
     >
       <h3 id={`products-title-${merchantId}`} className="font-semibold">
-        Products
+        {t('listTitle')}
       </h3>
       <ul className="grid grid-cols-1 rounded bg-white">
         {productList?.map(product => (
@@ -62,11 +63,13 @@ export default function MerchantInfoProducts({ merchantId }: Props) {
       </ul>
       <button
         type="submit"
-        aria-label={`Pay $${formattedPrice(totalPrice)} for selected products`}
+        aria-label={t('payButtonAriaLabel', {
+          amount: formattedPrice(totalPrice, locale),
+        })}
         className="mt-2 h-10 w-full rounded bg-neutral-600 font-semibold text-white hover:cursor-pointer hover:bg-neutral-400 disabled:cursor-not-allowed disabled:bg-gray-200"
         disabled={!totalPrice || totalPrice === 0}
       >
-        Pay $ {formattedPrice(totalPrice)}
+        {t('payButtonLabel', { amount: formattedPrice(totalPrice, locale) })}
       </button>
     </form>
   );

@@ -1,31 +1,34 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { useHeaderTitleStore } from '@/store/common';
 import { useEffect } from 'react';
-import { SUPPORTED_LANGUAGES } from '@/lib/constants';
+import { routing } from '@/i18n/routing';
 
 const useHeader = () => {
-  const { back, push } = useRouter();
+  const { back } = useRouter();
   const pathname = usePathname();
-  const pathLang = pathname.split('/')[1];
+  // const pathLang = pathname.split('/')[1];
 
-  const isRootPath =
-    pathLang in SUPPORTED_LANGUAGES && pathname === `/${pathLang}`;
+  // const isRootPath =
+  //   pathLang in SUPPORTED_LANGUAGES && pathname === `/${pathLang}`;
+  const isRootPath = routing.locales.some(locale =>
+    pathname.endsWith(`/${locale}`),
+  );
   const isOrderPath = pathname.includes('/order');
-  const currentLang = pathLang in SUPPORTED_LANGUAGES ? pathLang : 'ko';
-
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedLang = e.target.value;
-    const langKeys = Object.keys(SUPPORTED_LANGUAGES).join('|');
-    const langRegex = new RegExp(`^/(${langKeys})`);
-
-    const newPathname = pathname.replace(langRegex, `/${selectedLang}`);
-    push(newPathname);
-  };
+  // const currentLang = pathLang in SUPPORTED_LANGUAGES ? pathLang : 'ko';
+  //
+  // const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   const selectedLang = e.target.value;
+  //   const langKeys = Object.keys(SUPPORTED_LANGUAGES).join('|');
+  //   const langRegex = new RegExp(`^/(${langKeys})`);
+  //
+  //   const newPathname = pathname.replace(langRegex, `/${selectedLang}`);
+  //   push(newPathname);
+  // };
 
   return {
     router: { back },
     conditionalPath: { isRootPath, isOrderPath },
-    selectProps: { currentLang, handleChange },
+    // selectProps: { currentLang, handleChange },
   };
 };
 

@@ -1,13 +1,13 @@
-import { useLocaleContext } from '@/lib/contexts/LocaleContext';
-import Link from 'next/link';
 import XMark from '@/components/_icons/XMark';
+import { useLocale } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 
 interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export default function OrderFail({ searchParams }: Props) {
-  const locale = useLocaleContext();
+  const locale = useLocale();
   const urlParams = new URLSearchParams();
 
   Object.entries(searchParams).forEach(([key, value]) => {
@@ -17,9 +17,6 @@ export default function OrderFail({ searchParams }: Props) {
       urlParams.append(key, value);
     }
   });
-
-  // Declined(error) 시나리오로 작성 후, Pending, Paid 로 이어지도록 했습니다.
-  const newUrl = `/${locale}/order/pending?${urlParams.toString()}`;
 
   return (
     <section
@@ -38,7 +35,11 @@ export default function OrderFail({ searchParams }: Props) {
       <h2 id="order-fail" className="text-2xl font-semibold">
         Payment Failed.
       </h2>
-      <Link href={newUrl} className="hover:underline">
+      <Link
+        href={`/order/pending?${urlParams.toString()}`}
+        locale={locale}
+        className="hover:underline"
+      >
         Try Again
       </Link>
     </section>

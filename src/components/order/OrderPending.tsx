@@ -5,8 +5,8 @@ import { useOrderStatusQuery } from '@/lib/hooks/useOrders';
 import { PostOrderRequestParams } from '@/types/orders';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useLocaleContext } from '@/lib/contexts/LocaleContext';
 import { getPushUrl } from '@/lib/utils';
+import { useLocale } from 'next-intl';
 
 interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -21,12 +21,12 @@ export default function OrderPending({ searchParams }: Props) {
     amount: searchParams.amount,
   } as PostOrderRequestParams;
 
-  const locale = useLocaleContext();
   const { push } = useRouter();
   const { data: postOrderResponse } = useOrderStatusQuery(
     postOrderParams,
     orderId,
   );
+  const locale = useLocale();
 
   useEffect(() => {
     if (postOrderResponse) {

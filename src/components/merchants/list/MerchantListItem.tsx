@@ -3,14 +3,14 @@ import Image from 'next/image';
 import { memo } from 'react';
 import { replaceRatingToStar } from '@/lib/utils';
 import { Skeleton } from '@/components/_ui/skeleton';
-import Link from 'next/link';
-import { useLocaleContext } from '@/lib/contexts/LocaleContext';
+import { useLocale } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 
 function MerchantListItemComponent({ item }: { item: MerchantListItemInfo }) {
-  const locale = useLocaleContext();
+  const locale = useLocale();
   return (
     <li>
-      <Link href={`/${locale}/merchant/${item.id}`} className="block">
+      <Link href={`/merchant/${item.id}`} locale={locale} className="block">
         <article className="flex items-center justify-between rounded-lg bg-white px-4 py-2 hover:bg-neutral-200 hover:shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
           <div className="grid grid-cols-[40px_1fr] items-center gap-4">
             <Image

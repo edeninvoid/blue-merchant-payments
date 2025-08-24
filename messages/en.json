@@ -1,0 +1,25 @@
+{
+  "MerchantListPage": {
+    "title": "Merchants"
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, ko {🇰🇷 Korean} en {🇺🇸 English} other {Unknown}}"
+  },
+  "MerchantListNoItem": {
+    "text": "No Merchants Found."
+  },
+  "MerchantListSearchBar": {
+    "searchLabel": "Search Merchants",
+    "sortLabel": "Sort Merchants",
+    "name": "Name",
+    "category": "Category",
+    "distance": "Distance",
+    "rating": "Rating"
+  },
+  "MerchantInfoProducts": {
+    "listTitle": "Products",
+    "payButtonAriaLabel": "Pay ${amount} for selected products",
+    "payButtonLabel": "Pay $ {amount}"
+  }
+}

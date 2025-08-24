@@ -1,15 +1,15 @@
 'use client';
 
 import SuccessCheck from '@/components/_icons/SuccessCheck';
-import Link from 'next/link';
-import { useLocaleContext } from '@/lib/contexts/LocaleContext';
+import { useLocale } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 
 interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export default function OrderSuccess({ searchParams }: Props) {
-  const locale = useLocaleContext();
+  const locale = useLocale();
   const orderId = searchParams.orderId as string;
 
   // orderId를 통해 추가적인 주문 상세 정보를 표시할 수 있습니다. ex) getOrdersDetailApi
@@ -35,7 +35,7 @@ export default function OrderSuccess({ searchParams }: Props) {
       <h2 id="order-success" className="text-2xl font-semibold">
         Payment Successful!
       </h2>
-      <Link href={`/${locale}`} className="hover:underline">
+      <Link href={`/`} locale={locale} className="hover:underline">
         Continue Shopping :)
       </Link>
     </section>

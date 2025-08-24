@@ -1,8 +1,6 @@
 'use client';
 
 import OrderPending from '@/components/order/OrderPending';
-import { LocaleContext } from '@/lib/contexts/LocaleContext';
-import { SUPPORTED_LANGUAGES } from '@/lib/constants';
 import OrderSuccess from '@/components/order/OrderSuccess';
 import OrderFail from '@/components/order/OrderFail';
 import { ComponentType } from 'react';
@@ -26,8 +24,8 @@ export default function OrderPage({ locale, status, searchParams }: Props) {
   const Component = COMPONENT_BY_STATUS[status];
 
   return (
-    <LocaleContext value={locale as keyof typeof SUPPORTED_LANGUAGES}>
-      <Component searchParams={searchParams} />
-    </LocaleContext>
+    // <LocaleContext value={locale as keyof typeof SUPPORTED_LANGUAGES}>
+    <Component searchParams={searchParams} />
+    // </LocaleContext>
   );
 }

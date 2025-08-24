@@ -2,12 +2,15 @@ import { MerchantProductItem } from '@/types/merchant';
 import { memo } from 'react';
 import { formattedPrice } from '@/lib/utils';
 import { useMerchantsProductsStore } from '@/store/merchants';
+import { useLocale } from 'next-intl';
+import clsx from 'clsx';
 
 interface Props {
   item: MerchantProductItem;
 }
 
 function MerchantInfoProductListItemComponent({ item }: Props) {
+  const locale = useLocale();
   const onCheckChange = useMerchantsProductsStore(state => state.toggleProduct);
   return (
     <li>
@@ -23,9 +26,17 @@ function MerchantInfoProductListItemComponent({ item }: Props) {
         />
         <div className="flex flex-1 cursor-pointer items-center justify-between">
           <span className="text-sm">{item.name}</span>
-          <span className="flex flex-col justify-baseline">
-            <span className="font-semibold">${formattedPrice(item.price)}</span>
-            <span>{item.currency}</span>
+          <span
+            className={clsx(
+              'flex justify-baseline',
+              locale === 'en' ? 'flex-col' : 'gap-0.5',
+            )}
+          >
+            <span className="font-semibold">
+              {formattedPrice(item.price, locale)}
+            </span>
+            {/*<span>{item.currency}</span>*/}
+            <span>{locale === 'ko' ? '원' : 'USD'}</span>
           </span>
         </div>
       </label>

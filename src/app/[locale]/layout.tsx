@@ -1,5 +1,7 @@
 import ClientLayout from '@/app/[locale]/client-layout';
 import { MSWInitializer } from '@/lib/providers/MSWInitializer';
+import { NextIntlClientProvider } from 'next-intl';
+import { setRequestLocale } from 'next-intl/server';
 
 export default async function LocaleLayout({
   children,
@@ -10,11 +12,15 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
 
+  setRequestLocale(locale);
+
   return (
-    <html lang={locale}>
+    <html className="h-full" lang={locale}>
       <body className="vsc-initialize" cz-shortcut-listen="true">
         <MSWInitializer>
-          <ClientLayout>{children}</ClientLayout>
+          <NextIntlClientProvider>
+            <ClientLayout>{children}</ClientLayout>
+          </NextIntlClientProvider>
         </MSWInitializer>
       </body>
     </html>

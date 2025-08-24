@@ -1,13 +1,22 @@
 import { MerchantListRequestParams } from '@/types/merchant';
 
-export const SUPPORTED_LANGUAGES = {
-  ko: '한국어',
-  en: 'English',
+// export const SUPPORTED_LANGUAGES = {
+//   ko: '한국어',
+//   en: 'English',
+// };
+
+export const CURRENCY: Record<string, string> = {
+  ko: 'KRW',
+  en: 'USD',
 };
 
-export const CURRENCY = {
-  ko: '원',
-  en: 'USD',
+// TODO: API 등으로 실제 환율 받아서 처리
+export const EXCHANGE_RATES: Record<
+  string,
+  { currency: string; rate: number }
+> = {
+  ko: { currency: 'KRW', rate: 1400 },
+  en: { currency: 'USD', rate: 1 },
 };
 
 export const QUERY_KEYS = {

@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { PostOrderRequestParams, PostOrderResponse } from '@/types/orders';
+import { EXCHANGE_RATES } from '@/lib/constants';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -16,11 +17,16 @@ export function replaceRatingToStar(rating: number) {
   return '★'.repeat(filledStars) + '☆'.repeat(emptyStars);
 }
 
-export function formattedPrice(price: number) {
-  return new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(price);
+export function formattedPrice(price: number, locale: string) {
+  const exchangeInfo = EXCHANGE_RATES[locale] ?? EXCHANGE_RATES['en'];
+
+  const fractionDigits = exchangeInfo.currency === 'KRW' ? 0 : 2;
+  const convertedPrice = price * exchangeInfo.rate;
+
+  return new Intl.NumberFormat(locale, {
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
+  }).format(convertedPrice);
 }
 
 export function getPushUrl(
