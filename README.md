@@ -21,13 +21,13 @@ npm run test
 * 다국어를 지원하도록 했습니다. (next-intl)
   * 기본 언어는 브라우져의 설정에 따릅니다.
   * 지원 언어: 'en', 'ko'
-* jest 기반의 테스트 코드를 작성했습니다. (보완 예정입니다.)
+* jest 기반의 테스트 코드를 작성했습니다.
 
 ### 시나리오 설정 방법
 * 최초 프로젝트 실행 시, scenario 쿼리 스트링에 의해 시나리오를 결정합니다.
 * scenario는 'success', 'pending', 'error'로 구성했습니다. (default: error)
   * http://localhost:{port_num}/{locale}?scenario={success|pending|error}
-* error 시나리오로 시작 시,
+* error 시나리오로 시작 시
   * 주문 실패 후 재시도, 로딩, 성공으로 이어지도록 구성했습니다. 
 * pending 시나리오로 시작 시
   * 로딩, 성공으로 이어지도록 구성했습니다.
