@@ -14,26 +14,6 @@ const mockMerchantData = [
   },
 ];
 
-jest.mock('@/i18n/navigation', () => ({
-  Link: ({ children }: { children: React.ReactNode }) => children,
-  redirect: jest.fn(),
-  usePathname: () => '/',
-  useRouter: () => ({ push: jest.fn() }),
-  getPathname: () => '/',
-  createNavigation: () => ({
-    Link: ({ children }: { children: React.ReactNode }) => children,
-    redirect: jest.fn(),
-    usePathname: () => '/',
-    useRouter: () => ({ push: jest.fn() }),
-    getPathname: () => '/',
-  }),
-}));
-
-jest.mock('next-intl', () => ({
-  ...jest.requireActual('next-intl'),
-  useLocale: jest.fn(() => 'en'),
-}));
-
 jest.mock('@/lib/hooks/useMerchants');
 
 jest.mock('@/services/merchants', () => ({

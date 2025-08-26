@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
 import { NextIntlClientProvider } from '../__mocks__/next-intl';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Suspense } from 'react';
 
 export const renderWithProvider = (ui: React.ReactNode, locale = 'en') => {
   const queryClient = new QueryClient();
@@ -17,7 +18,9 @@ export const createWrapper = () => {
 
   function QueryClientTestWrapper({ children }: { children: React.ReactNode }) {
     return (
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+      </QueryClientProvider>
     );
   }
 

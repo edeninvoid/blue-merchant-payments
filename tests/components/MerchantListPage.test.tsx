@@ -1,31 +1,27 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import MerchantListPage from '@/components/merchants/list/MerchantListPage';
 import { renderWithProvider } from '../__lib__/renderWithProvider';
+import { useAuthStore } from '@/store/auth';
 
-jest.mock('@/i18n/navigation', () => ({
-  Link: ({ children }: { children: React.ReactNode }) => children,
-  redirect: jest.fn(),
-  usePathname: () => '/',
-  useRouter: () => ({ push: jest.fn() }),
-  getPathname: () => '/',
-  createNavigation: () => ({
-    Link: ({ children }: { children: React.ReactNode }) => children,
-    redirect: jest.fn(),
-    usePathname: () => '/',
-    useRouter: () => ({ push: jest.fn() }),
-    getPathname: () => '/',
-  }),
-}));
+beforeEach(() => {
+  jest.clearAllMocks();
+
+  // 테스트용 토큰 세팅
+  useAuthStore.setState({
+    token: {
+      token: 'mock-token',
+      expireDate: new Date(Date.now() + 1000 * 60 * 60),
+    },
+  });
+});
 
 describe('[UI] MerchantListPage', () => {
   it('검색창과 정렬 select box가 렌더링된다.', async () => {
     renderWithProvider(<MerchantListPage />);
 
-    // placeholder 번역된 search label 확인
     const input = await screen.findByPlaceholderText('searchLabel');
     expect(input).toBeInTheDocument();
 
-    // 정렬 드롭다운이 존재하는지 확인
     const select = await screen.findByRole('combobox', {
       name: /Sort merchants/i,
     });
@@ -37,10 +33,8 @@ describe('[UI] MerchantListPage', () => {
 
     const input = await screen.findByPlaceholderText('searchLabel');
 
-    // 입력 이벤트 발생
     fireEvent.change(input, { target: { value: 'coffee' } });
 
-    // debounce 때문에 기다림
     await waitFor(() => {
       expect(input).toHaveValue('coffee');
     });
@@ -53,7 +47,6 @@ describe('[UI] MerchantListPage', () => {
       name: /Sort merchants/i,
     });
 
-    // category 로 변경
     fireEvent.change(select, { target: { value: 'category' } });
 
     await waitFor(() => {

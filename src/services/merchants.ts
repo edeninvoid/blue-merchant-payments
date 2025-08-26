@@ -12,7 +12,7 @@ const getMerchantList = async (
   return await api.get('/merchants', {
     params: {
       query: params?.query ?? '',
-      sort: params?.sort ?? 'rating',
+      sort: params?.sort ?? 'name',
     },
   });
 };

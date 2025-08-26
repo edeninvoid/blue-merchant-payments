@@ -37,6 +37,16 @@ describe('[lib] utils', () => {
   });
 
   describe('formattedPrice', () => {
+    it('locale이 EXCHANGE_RATES에 존재하지 않으면 en을 기본값으로 사용한다. ', () => {
+      const price = 50;
+      expect(formattedPrice(price, 'cn')).toBe(
+        new Intl.NumberFormat('en', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }).format(price * EXCHANGE_RATES['en'].rate),
+      );
+    });
+
     it('locale이 KRW면 소수점 없이 표시한다.', () => {
       const price = 100;
       expect(formattedPrice(price, 'ko')).toBe(

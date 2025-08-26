@@ -28,6 +28,25 @@ describe('[service] merchants', () => {
     jest.clearAllMocks();
   });
 
+  it('getMerchantList 요청에 query, sort 인자값을 넣지 않으면 기본값으로 가맹점 리스트를 전달 받을 수 있다.', async () => {
+    mockedApiGet.mockResolvedValue([mockMerchantData]);
+
+    const params = {
+      query: undefined,
+      sort: undefined,
+    } as MerchantListRequestParams;
+
+    const result = await getMerchantList(params);
+
+    expect(mockedApiGet).toHaveBeenCalledWith('/merchants', {
+      params: {
+        query: '',
+        sort: 'name',
+      },
+    });
+    expect(result).toEqual([mockMerchantData]);
+  });
+
   it('getMerchantList 요청으로 query, sort 인자값을 통해 가맹점 리스트를 전달 받을 수 있다.', async () => {
     mockedApiGet.mockResolvedValue([mockMerchantData]);
 
