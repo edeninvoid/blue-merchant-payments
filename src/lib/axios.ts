@@ -1,4 +1,9 @@
-import axios, { AxiosRequestHeaders } from 'axios';
+import axios, {
+  AxiosError,
+  AxiosRequestHeaders,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from 'axios';
 import { useAuthStore } from '@/store/auth';
 
 export const api = axios.create({
@@ -10,7 +15,9 @@ export const api = axios.create({
   },
 });
 
-api.interceptors.request.use(config => {
+export const handleAuthInterceptor = async (
+  config: InternalAxiosRequestConfig,
+): Promise<InternalAxiosRequestConfig> => {
   if (config.url?.includes('/auth/token')) {
     return config;
   }
@@ -32,15 +39,19 @@ api.interceptors.request.use(config => {
   } as AxiosRequestHeaders;
 
   return config;
-});
+};
 
-api.interceptors.response.use(
-  response => response.data,
-  error => {
-    if (error.response?.status === 401) {
-      console.error('Unauthorized.');
-      return [];
-    }
-    return Promise.reject(error);
-  },
-);
+export const handleResponseSuccess = <T>(response: AxiosResponse<T>) => {
+  return response.data;
+};
+
+export const handleResponseError = (error: AxiosError | unknown) => {
+  if ((error as AxiosError)?.response?.status === 401) {
+    console.error('Unauthorized.');
+    return [];
+  }
+  return Promise.reject(error);
+};
+
+api.interceptors.request.use(handleAuthInterceptor);
+api.interceptors.response.use(handleResponseSuccess, handleResponseError);

@@ -17,7 +17,7 @@ jest.mock('@/i18n/navigation', () => ({
   }),
 }));
 
-describe('MerchantListPage', () => {
+describe('[UI] MerchantListPage', () => {
   it('검색창과 정렬 select box가 렌더링된다.', async () => {
     renderWithProvider(<MerchantListPage />);
 

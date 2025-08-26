@@ -4,6 +4,16 @@ import {
   getMerchantProductList,
 } from '@/services/merchants';
 import { api } from '@/lib/axios';
+import { MerchantListRequestParams } from '@/types/merchant';
+
+const mockMerchantData = {
+  id: 1,
+  name: 'Merchant  A',
+  category: 'cafe',
+  distanceKm: 1.0,
+  rating: 3.0,
+  logoUrl: '/icons/merchant.png',
+};
 
 jest.mock('@/lib/axios', () => ({
   api: {
@@ -11,42 +21,51 @@ jest.mock('@/lib/axios', () => ({
   },
 }));
 
-describe('merchants service', () => {
+describe('[service] merchants', () => {
   const mockedApiGet = api.get as jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('getMerchantList: query, sort 전달 및 결과 반환', async () => {
-    const mockData = [{ id: '1', name: 'Merchant A' }];
-    mockedApiGet.mockResolvedValue(mockData);
+  it('getMerchantList 요청으로 query, sort 인자값을 통해 가맹점 리스트를 전달 받을 수 있다.', async () => {
+    mockedApiGet.mockResolvedValue([mockMerchantData]);
 
-    const result = await getMerchantList({ query: 'coffee', sort: 'name' });
+    const params = {
+      query: 'coffee',
+      sort: 'name',
+    } as MerchantListRequestParams;
 
-    expect(mockedApiGet).toHaveBeenCalledWith('/merchants', {
-      params: { query: 'coffee', sort: 'name' },
-    });
-    expect(result).toEqual(mockData);
+    const result = await getMerchantList(params);
+
+    expect(mockedApiGet).toHaveBeenCalledWith('/merchants', { params });
+    expect(result).toEqual([mockMerchantData]);
   });
 
-  it('getMerchantInfo: id 전달 및 결과 반환', async () => {
-    const mockData = { id: '1', name: 'Merchant A' };
-    mockedApiGet.mockResolvedValue(mockData);
+  it('getMerchantInfo 요청으로 가맹점 id 인자값을 통해 가맹점 데이터를 전달 받을 수 있다.', async () => {
+    mockedApiGet.mockResolvedValue(mockMerchantData);
 
     const result = await getMerchantInfo('1');
 
     expect(mockedApiGet).toHaveBeenCalledWith('/merchants/1');
-    expect(result).toEqual(mockData);
+    expect(result).toEqual(mockMerchantData);
   });
 
-  it('getMerchantProductList: id 전달 및 결과 반환', async () => {
-    const mockData = [{ id: '101', name: 'Coffee' }];
-    mockedApiGet.mockResolvedValue(mockData);
+  it('getMerchantProductList 요청으로 가맹점 id 인자값을 통해 상품 리스트 데이터를 전달 받을 수 있다.', async () => {
+    const mockProductsData = [
+      {
+        id: 1,
+        name: 'Product A',
+        price: 2.0,
+        currency: 'USD',
+        imageUrl: '/img/product.jpg',
+      },
+    ];
+    mockedApiGet.mockResolvedValue(mockProductsData);
 
     const result = await getMerchantProductList('1');
 
     expect(mockedApiGet).toHaveBeenCalledWith('/merchants/1/items');
-    expect(result).toEqual(mockData);
+    expect(result).toEqual(mockProductsData);
   });
 });

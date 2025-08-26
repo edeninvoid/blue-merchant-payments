@@ -11,3 +11,15 @@ export const renderWithProvider = (ui: React.ReactNode, locale = 'en') => {
     </QueryClientProvider>,
   );
 };
+
+export const createWrapper = () => {
+  const queryClient = new QueryClient();
+
+  function QueryClientTestWrapper({ children }: { children: React.ReactNode }) {
+    return (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    );
+  }
+
+  return QueryClientTestWrapper;
+};

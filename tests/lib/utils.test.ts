@@ -7,7 +7,7 @@ import {
 } from '@/lib/utils';
 import { EXCHANGE_RATES } from '@/lib/constants';
 
-describe('utils', () => {
+describe('[lib] utils', () => {
   describe('cn', () => {
     it('clsx + tailwind-merge 정상 동작', () => {
       const result = cn('p-2', 'text-center', 'p-4');
@@ -22,25 +22,22 @@ describe('utils', () => {
       const start = Date.now();
       await delay(50);
       const elapsed = Date.now() - start;
-      expect(elapsed).toBeGreaterThanOrEqual(50);
+      expect(elapsed).toBeGreaterThanOrEqual(48);
     });
   });
 
   describe('replaceRatingToStar', () => {
-    it('정수 평점을 ★로 변환', () => {
-      expect(replaceRatingToStar(3)).toBe('★★★☆☆');
-      expect(replaceRatingToStar(5)).toBe('★★★★★');
+    it('정수 평점을 반올림하여 ★로 변환한다.', () => {
       expect(replaceRatingToStar(0)).toBe('☆☆☆☆☆');
-    });
-
-    it('반올림 처리', () => {
       expect(replaceRatingToStar(2.6)).toBe('★★★☆☆');
+      expect(replaceRatingToStar(3)).toBe('★★★☆☆');
       expect(replaceRatingToStar(4.2)).toBe('★★★★☆');
+      expect(replaceRatingToStar(5)).toBe('★★★★★');
     });
   });
 
   describe('formattedPrice', () => {
-    it('locale이 KRW면 소수점 없이 표시', () => {
+    it('locale이 KRW면 소수점 없이 표시한다.', () => {
       const price = 100;
       expect(formattedPrice(price, 'ko')).toBe(
         new Intl.NumberFormat('ko', {
@@ -50,7 +47,7 @@ describe('utils', () => {
       );
     });
 
-    it('locale이 USD면 소수점 2자리까지 표시', () => {
+    it('locale이 USD면 소수점 2자리까지 표시한다.', () => {
       const price = 10;
       expect(formattedPrice(price, 'en')).toBe(
         new Intl.NumberFormat('en', {

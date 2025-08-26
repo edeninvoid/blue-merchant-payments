@@ -5,7 +5,9 @@ jest.mock('next/navigation', () => ({
   redirect: jest.fn(),
 }));
 
-test('RootPage는 /en 으로 리다이렉트한다.', () => {
-  RootPage();
-  expect(redirect).toHaveBeenCalledWith('/en');
+describe('[Page] Root', () => {
+  test('RootPage는 /en 으로 리다이렉트한다.', () => {
+    RootPage();
+    expect(redirect).toHaveBeenCalledWith('/en');
+  });
 });

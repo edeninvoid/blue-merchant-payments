@@ -12,7 +12,7 @@ jest.mock('@/components/merchants/list/MerchantListPage', () => ({
   default: jest.fn(() => <div>Mocked MerchantListPage</div>),
 }));
 
-describe('LocalePage', () => {
+describe('[Page] Locale', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
